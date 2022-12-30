@@ -1,0 +1,15 @@
+; This example program checks if the input string is a binary palindrome.
+; Input: a string of 0's and 1's, eg '1001001'
+
+
+; Machine starts in state 0.
+
+; State 0: read the leftmost symbol
+;
+0 0 0 r 0
+0 1 1 r 0
+0 _ _ l accept     ; Empty input
+
+accept 0 1 l halt
+accept 1 0 l accept
+accept _ 1 l halt
