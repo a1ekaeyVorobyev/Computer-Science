@@ -1,0 +1,169 @@
+section	.text
+    global _start       
+
+_printNewLine:
+    mov	edx, 1    
+    mov	ecx, msg1   
+    mov	ebx, 1	    
+    mov	eax, 4	    
+    int	0x80        
+    ret  
+
+_printLine:
+    mov	ebx, 1	    
+    mov	eax, 4	    
+    int	0x80        
+    ret  
+
+
+_reverse:
+    pushad
+    mov ecx,0
+Cycle1:
+    dec edx
+    mov al, byte[esi+ecx]
+    inc ecx
+    mov byte[edi+edx],al
+    cmp edx, 0  
+    jz EndLoop1 
+    jmp Cycle1  
+EndLoop1:    
+    popad
+    ret
+
+_getBinaryNumber:
+    pushad
+    mov ecx,8
+Cycle2:
+    dec ecx
+    mov byte[binaryRes+ecx],'1'
+    shr eax,1
+    jc t
+    mov byte[binaryRes+ecx],'0'
+t:   
+    cmp ecx, 0
+    jz EndLoop1
+    jmp Cycle2  ; loop back
+EndLoop2:    
+    popad
+    ret
+
+;---Print dec firmat
+_cprint:
+    pushad        
+    mov [temp], eax  
+    mov eax, 4 
+    mov ebx, 1    
+    mov ecx, temp    
+    mov edx, 1    
+    int 0x80      
+    popad         
+    ret
+
+_dprint:
+    pushad        
+    add eax, '0'  
+    mov [temp], eax  
+    mov eax, 4 
+    mov ebx, 1    
+    mov ecx, temp    
+    mov edx, 1    
+    int 0x80      
+    popad         
+    ret  
+
+printDecimal:
+    pushad      
+    cmp eax, 0   
+    jge Pos      
+    push eax     
+    mov eax, '-' 
+    call _cprint 
+    pop eax      
+    neg eax      
+Pos:
+    mov ebx, 10 
+    mov ecx, 1  
+Cycle31:
+    mov edx, 0  
+    div ebx     
+    push edx    
+    cmp eax, 0  
+    jz EndLoop31 
+    inc ecx     
+    jmp Cycle31  
+EndLoop31:
+Cycle32:
+    pop eax      ; pop up the digits we have stored
+    call _dprint ; and print them to stdout
+    dec ecx      ; decrement number of digits counter
+    jz EndLoop32  ; if it's zero we are done
+    jmp Cycle32   ; loop back
+EndLoop32:   
+    popad ; pop registers
+    ret   ; bye
+
+;------
+
+
+
+_start:;tell linker entry point
+
+    mov eax, [number]
+    call printDecimal
+    call _printLine
+    
+    mov	edx, 1    
+    mov	ecx, msg1    ;
+    call _printLine
+    call _printLine
+
+    push eax
+    mov eax,[number]
+    call _getBinaryNumber
+    pop eax
+    mov     ecx, binaryRes
+    mov     edx, 8
+    call _printLine
+    call _printNewLine
+    
+    mov edx,8
+    mov edi,result
+    mov esi,binaryRes
+    call _reverse
+    mov	edx, 8    ;message length
+    mov	ecx, result    ;message to write
+    call _printLine
+    call _printNewLine
+    call _printNewLine
+    
+    mov edx,len
+    mov edi,result
+    mov esi,msg
+    call _reverse
+    
+    mov	edx, len    
+    mov	ecx, msg    
+    call _printLine
+    
+    call _printNewLine
+    
+    mov	edx, len    
+    mov	ecx, result    
+    call _printLine
+    call _printNewLine
+    
+    mov	eax, 1	    ;system call number (sys_exit)
+    int	0x80        ;call kernel
+
+section	.data
+
+msg	db	'Hello, world!'	;our dear string
+len	equ	$ - msg			;length of our dear string
+msg1 db 0xa
+number db 137
+
+segment .bss
+    result resb len
+    binaryRes resb 8
+    temp: resb 1
