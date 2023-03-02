@@ -31,4 +31,6 @@ int main (void)
                 }
 		cnt--;
 	}
+	if (seachNumber!=a)
+		 printf("У вас закончились попытки. Попробуйте еще раз.\n");
 }
