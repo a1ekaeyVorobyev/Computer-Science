@@ -8,7 +8,7 @@ using namespace std;
 
 bool isDigit(string text){
 	for(int i=0;i<text.length();i++){
-		if (text[i]<48 and text[i]>57)
+		if (text[i]<48 || text[i]>57)
 			return false;
 	}
 	return true;
@@ -31,7 +31,6 @@ int main (void)
 		//scanf("%d", &a); // ввод  переменной a с клавиатуры
 		cin>>text;
 		if (isDigit(text)){
-			try{
 				a = stoi(text);
 				if (seachNumber==a){
 					printf ("Вы угадали число\n");
@@ -44,9 +43,6 @@ int main (void)
                         printf ("Меньше.\n");
                 	}
 				cnt--;
-			}catch(...){
-				printf ("Вводите только числа\n");
-			}
 		}
 		else {
 			printf ("Вводите только числа\n");
