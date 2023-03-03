@@ -1,54 +1,57 @@
-/* hello.c */
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <string>
+#include "stdio.h"
+#include <stdlib.h>  // чтобы пользоваться функцией rand
+#include <time.h> 
+#include <string.h>
 
-using namespace std;
+#define cnt 10 //количество попыток
+#define INPUT_BUF_SIZE 256
 
-bool isDigit(string text){
-	for(int i=0;i<text.length();i++){
-		if (text[i]<48 || text[i]>57)
-			return false;
-	}
-	return true;
+int isDigit(char* text){
+    int i=0;
+    char c;
+    while(i<INPUT_BUF_SIZE)
+    {
+        c = text[i];
+        if (c == 10){
+            return 0;
+        }else if (c < 48 || c > 57)
+            return 1;
+        i++;
+    }
+    return 0;
 }
 
-int main (void)
+int main()
 {
-	//srand(time(0));
-	int a,cnt,seachNumber;
-	string text;
-	cnt = 5;
-	srand(unsigned(time(0)));
-	seachNumber = rand()%100;
-	//printf ("Загадали число:|%d|\n",10);
-	printf ("Загадали число:|%d|\n",seachNumber);
-	printf ("Угодайте число от 0 до 100\n");
-	while (cnt>0)
-	{
-		printf ("Введите ваше число\n");
-		//scanf("%d", &a); // ввод  переменной a с клавиатуры
-		cin>>text;
-		if (isDigit(text)){
-				a = stoi(text);
-				if (seachNumber==a){
-					printf ("Вы угадали число\n");
-					break;
-				}
-				if (seachNumber>a){
-                        printf ("Больше.\n");
-                	}
-				if (seachNumber<a){
-                        printf ("Меньше.\n");
-                	}
-				cnt--;
-		}
-		else {
-			printf ("Вводите только числа\n");
-			continue;
-		}
-	}
-	if (seachNumber!=a)
-		 printf("У вас закончились попытки. Попробуйте еще раз.\n");
+    srand(time(NULL));
+    int seachNumber = rand()%100;
+    //printf("%d ", seachNumber);
+    int i=0;
+    int val = 0;
+    char buf[INPUT_BUF_SIZE];
+    while( i< cnt ){
+        printf("Введите ваше число\n");
+        //scanf("%c", &a);
+        fgets(buf, INPUT_BUF_SIZE, stdin);
+        if (isDigit(buf))
+        {
+            printf("Надо вводить только символы.\n");
+        }else{
+            val = atoi(buf);
+            if (seachNumber == val){
+                printf ("Вы угадали число\n");
+                break;
+            }
+            if (seachNumber < val){
+                printf ("Больше.\n");
+            }
+            if (seachNumber > val){
+                printf ("Меньше.\n");
+            }
+            i++;
+        }
+    }
+    if (seachNumber != val)
+        printf("У вас закончились попытки. Попробуйте еще раз.\n");
+	return 0;
 }
