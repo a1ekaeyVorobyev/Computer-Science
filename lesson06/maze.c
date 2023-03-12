@@ -69,7 +69,6 @@ void generatorMaze(cellptr maze) {
     {
         cellptr current = pop();
 
-        // check that there are unvisited neighbors
         if (!allVisited(current)) 
         {
             push(current);
@@ -77,28 +76,27 @@ void generatorMaze(cellptr maze) {
             cellptr neighbor;
             int dir = 0;
 
-            // get random neighbor that isnt NULL and isnt visited already
             while ((neighbor = current->neighbors[dir = getRand(0, 3)]) == NULL || neighbor->visited)
-                    ;
+            {
+
+            }
             
-            // each cell only has a right wall and a bottom wall
-            // so to modify for example the left wall of the current cell
-            // you would modify the right wall of the cell left to the current cell
-
-
-            if (dir == LEFT) {
-                neighbor->walls[RIGHT_WALL] = false;            
+            switch(dir) 
+            {
+                case LEFT:
+                    neighbor->walls[RIGHT_WALL] = false;    
+                break;
+                case RIGHT:
+                    current->walls[RIGHT_WALL] = false;
+                break;
+                case BOTTON:
+                    current->walls[BOT_WALL] = false;
+                break;
+                case TOP:
+                    neighbor->walls[BOT_WALL] = false;
+                break;
             }
-            if (dir == RIGHT) {
-                current->walls[RIGHT_WALL] = false;
-            }
-            if (dir == BOT) {
-                current->walls[BOT_WALL] = false;
-            }
-            if (dir == TOP) {
-                neighbor->walls[BOT_WALL] = false;
-            }
-        
+            
             neighbor->visited = true;
             push(neighbor);         
         }       
@@ -134,7 +132,6 @@ void printMaze(cellptr maze)
         }
         cptr++; 
     }
-    //for (int i = 0; i < (colMAX * 2); ++i) putchar('_');
     putchar(NEWLINE);
 }
 
@@ -150,29 +147,24 @@ void initСells(cellptr maze)
         for (col = 0; col < rowMAX; ++col) {  
             if (row == TOP_ROW) {
 
-                // top row has no cells above them
                 colptr->neighbors[TOP] = NULL;                          
             } else colptr->neighbors[TOP] = &(rowptr - rowMAX)[col];
 
             if (row == BOT_ROW) {
 
-                // bottom row has no cells below them
-                colptr->neighbors[BOT] = NULL;
-            } else colptr->neighbors[BOT] = &(rowptr + rowMAX)[col];
+                colptr->neighbors[BOTTON] = NULL;
+            } else colptr->neighbors[BOTTON] = &(rowptr + rowMAX)[col];
 
             if (col == FAR_LEFT) {
 
-                // left column has no cells left to them
                 colptr->neighbors[LEFT] = NULL;
             } else colptr->neighbors[LEFT] = (colptr - 1);
 
             if (col == FAR_RIGHT) {
 
-                // right column has no cells right to the,
                 colptr->neighbors[RIGHT] = NULL;
             } else colptr->neighbors[RIGHT] = (colptr + 1);
             
-            // set all walls to true at the start
             colptr->walls[BOT_WALL] = true;                 
             colptr->walls[RIGHT_WALL] = true;
 
@@ -199,8 +191,8 @@ bool allVisited(cellptr cell)
     if (!isNull(cell->neighbors[TOP])) {
         t = cell->neighbors[TOP]->visited;
     }
-    if (!isNull(cell->neighbors[BOT])) {
-        b = cell->neighbors[BOT]->visited;
+    if (!isNull(cell->neighbors[BOTTON])) {
+        b = cell->neighbors[BOTTON]->visited;
     }
     return (l && r && t && b);
 }
