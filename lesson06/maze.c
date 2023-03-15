@@ -8,9 +8,6 @@
 #define NEWLINE 10
 #define SPACE 32
 
-typedef unsigned short bool;
-#define true 1
-#define false 0
 
 #define TOP_ROW 0
 #define BOT_ROW (rowMAX - 1)

@@ -4,7 +4,7 @@
 #define LEFT 0
 #define RIGHT 1
 #define TOP 2 
-#define BOT 3
+#define BOTTON 3
 
 //-- oпределяем тип bool
 typedef unsigned short bool;
