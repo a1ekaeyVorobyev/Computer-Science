@@ -1,57 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include "stack.c"
-#include "cell.h"
-
-//---символы для прорисовки
-#define NEWLINE 10
-#define SPACE 32
-
-
-#define TOP_ROW 0
-#define BOT_ROW (rowMAX - 1)
-#define FAR_LEFT 0
-#define FAR_RIGHT (colMAX - 1)
-
-#define BOT_WALL 0
-#define RIGHT_WALL 1
-
-//-- размер для лабиринта
-static int rowMAX;
-static int colMAX;
-
-//иницилизация ячейки
-void initСells(cellptr maze);
-//распечатоть
-void printMaze(cellptr maze);
-//гератор
-void generatorMaze(cellptr maze);
-//генератор куда идти
-int getRand();
-
-int main(int argc, char *argv[]) 
-{
-    srand(time(0));
-
-    if (argc == 1) 
-    {    
-        colMAX = rowMAX = 15;
-    } else if (argc == 2)
-        colMAX = rowMAX = (atoi(argv[1]));
-    else{
-        colMAX = (atoi(argv[1]));
-        rowMAX = (atoi(argv[2]));
-    }
-
-    cell maze[rowMAX][colMAX];
-
-    initСells(*maze);
-    generatorMaze(*maze);
-    printMaze(*maze);
-    return 0;
-}
-
+#include"maze.h"
+#include"stack.c"
 
 void generatorMaze(cellptr maze) {
     cellptr start = maze;   

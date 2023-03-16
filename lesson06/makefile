@@ -1,5 +1,5 @@
 all:
-	gcc maze.c -o maze
+	gcc prog.c -o maze
 run:
 	./maze 25
 clear:
