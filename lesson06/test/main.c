@@ -1,5 +1,5 @@
 #include "test.h" // Везде подключаем только заголовочные файлы!
-#include "test.c"
+//#include "test.c"
 
 int main()
 {
