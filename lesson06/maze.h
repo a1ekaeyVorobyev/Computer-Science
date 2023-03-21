@@ -9,7 +9,6 @@
 #ifndef MAZE
 #define MAZE
 
-
 #define NEWLINE 10
 #define SPACE 32
 
@@ -21,10 +20,10 @@
 #define BOT_WALL 0
 #define RIGHT_WALL 1
 
-static int rowMAX;
-static int colMAX;
+static int rowMAX ;
+static int colMAX ;
 
-
+void initMaze(int row, int col);
 //иницилизация ячейки
 void initСells(cellptr maze);
 //распечатоть

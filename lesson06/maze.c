@@ -1,7 +1,18 @@
 #include"maze.h"
-#include"stack.c"
+#include"stack.h"
+//#include"stack.c"
+#include <time.h>
+#include <stdio.h>
+#include "null.h"
+
+
+void initMaze(int row,int col){
+    rowMAX = row;
+    colMAX = col;
+}
 
 void generatorMaze(cellptr maze) {
+    srand(time(0));
     cellptr start = maze;   
     push(start);
 
@@ -9,8 +20,9 @@ void generatorMaze(cellptr maze) {
     bool allVisited(cellptr cell);
     int getRand(int min, int max);
 
+    int i=0;
     //пока стэк не пустой
-    while (sp > 0) 
+    while (getSP() > 0) 
     {
         cellptr current = pop();
 
@@ -23,7 +35,7 @@ void generatorMaze(cellptr maze) {
 
             while ((neighbor = current->neighbors[dir = getRand(0, 3)]) == NULL || neighbor->visited)
             {
-
+               
             }
             
             switch(dir) 
@@ -43,6 +55,7 @@ void generatorMaze(cellptr maze) {
             }
             
             neighbor->visited = true;
+            i++;
             push(neighbor);         
         }       
     }
@@ -51,7 +64,9 @@ void generatorMaze(cellptr maze) {
 void printMaze(cellptr maze)
  {
     system("clear");
+  
     cellptr cptr = maze;
+
     // распечаиываем верхнюб часть лабиринта
     for (int i = 0; i < (colMAX * 2); ++i) putchar('_');
     putchar(NEWLINE);
@@ -84,7 +99,6 @@ void initСells(cellptr maze)
 {
     cellptr rowptr, colptr;
     int row, col;
-
     for (row = 0; row < rowMAX; ++row) {
         rowptr = &maze[rowMAX * row];
         colptr = rowptr;

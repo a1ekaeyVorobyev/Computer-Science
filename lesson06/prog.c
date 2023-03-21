@@ -1,12 +1,7 @@
 #include"maze.h"
-#include"maze.c"
-#include <time.h>
-#include <stdio.h>
 
 int main(int argc, char *argv[]) 
 {
-    srand(time(0));
-
     if (argc == 1) 
     {    
         colMAX = rowMAX = 15;
@@ -16,9 +11,9 @@ int main(int argc, char *argv[])
         colMAX = (atoi(argv[1]));
         rowMAX = (atoi(argv[2]));
     }
-
+    initMaze(colMAX,rowMAX);
     cell maze[rowMAX][colMAX];
-
+ 
     initСells(*maze);
     generatorMaze(*maze);
     printMaze(*maze);

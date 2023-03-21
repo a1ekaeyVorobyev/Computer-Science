@@ -2,14 +2,10 @@
 #define STACK
 
 #include "cell.h"
-
-static cellptr cellstack[10000];
-static int sp;
-
-static cellptr cellstack[10000];
-static int sp;
+#include "null.h"
 
 void push(cellptr cell);
 cellptr pop();
+int getSP();
 
 #endif
