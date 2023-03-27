@@ -5,9 +5,8 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include <sys/select.h>
+#include<stdbool.h>
 
-#define TRUE 1
-#define FALSE 0
 
 int main(int argc, char *argv[])
 {
@@ -59,7 +58,7 @@ int main(int argc, char *argv[])
 	}
 
 	// цикл для опроса дискирипторов 
-	done = FALSE;
+	done = false;
 	while(!done)
 	{
 		// инициализируем   descriptor  
@@ -99,7 +98,7 @@ int main(int argc, char *argv[])
 			// выход из цикла и чата 
 			else if( strcmp(buffer,"close\n")==0 )
 			{
-				done=TRUE;
+				done=true;
 			}
 			else
 			{

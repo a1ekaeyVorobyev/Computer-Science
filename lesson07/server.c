@@ -5,9 +5,7 @@
 #include <netdb.h>
 #include <sys/socket.h>
 #include <sys/select.h>
-
-#define TRUE 1
-#define FALSE 0
+#include<stdbool.h>
 
 int main(int argc, char *argv[])
 {
@@ -70,7 +68,7 @@ int main(int argc, char *argv[])
 	FD_SET(serverfd, &main_fd);	
 
 	// Цикл для установки соединения
-	done = FALSE;
+	done = false;
 	while(!done)
 	{
 
@@ -166,7 +164,7 @@ int main(int argc, char *argv[])
 						buffer[r] = '\0';			
 						if( strcmp(buffer,"shutdown\n")==0 )
 						{
-							done = TRUE;		
+							done = true;		
 						}
 						
 						else
