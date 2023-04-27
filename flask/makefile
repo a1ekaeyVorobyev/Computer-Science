@@ -1,4 +1,6 @@
 all:
 	flask run --host=0.0.0.0
-docker:
-	docker compose up -d
+dockbuild:
+	sudo docker run -p 5000:5000 -d flask_docker
+dockrun:
+	 sudo docker run -p 5000:5000 -d flask_docker	
