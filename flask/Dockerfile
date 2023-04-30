@@ -1,6 +1,5 @@
 FROM ubuntu:latest
 RUN apt-get update -y
-RUN apt-get install -y mc
 RUN apt-get install -y python3 python3-pip
 #RUN pip install flask
 COPY . /app
