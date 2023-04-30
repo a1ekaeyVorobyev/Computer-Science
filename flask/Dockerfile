@@ -1,13 +1,9 @@
-# syntax=docker/dockerfile:1.4
-FROM --platform=$BUILDPLATFORM python:3.10-alpine AS builder
-
-WORKDIR /app
-
-COPY requirements.txt /app
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip3 install -r requirements.txt
-
+FROM ubuntu:latest
+RUN apt-get update -y
+RUN apt-get install -y mc
+RUN apt-get install -y python3 python3-pip
+#RUN pip install flask
 COPY . /app
-
-ENTRYPOINT ["python3"]
-CMD ["web.py"]
+WORKDIR /app 
+RUN pip install -r requirements.txt
+CMD ["make"]
