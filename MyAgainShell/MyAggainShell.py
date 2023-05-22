@@ -32,8 +32,8 @@ def getToken():
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        #print("Введите имя скрипта для обработки")
-        loadFile("script.txt")
+        print("Введите имя скрипта для обработки")
+        #loadFile("script.txt")
         getToken()
         runScript()
     else:
