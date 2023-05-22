@@ -1,0 +1,13 @@
+a = 2
+while a<100:
+    a+=1
+    if a<80:
+        <<a
+    else:
+        <<("abc"+"df")
+        <<a
+        b = 0
+        while b<3
+            <<b
+            b+=1
+    a+=10
