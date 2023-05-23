@@ -64,9 +64,9 @@ def div(val):
 
 
 def printValue(val):
+    """Вывод на экран"""
     g = getValue(val[1])
     print(g)
-    return
 
 def inputValue(val):
     txt = input()
@@ -90,7 +90,8 @@ def func(val):
         raise MyException('Переменная не обЪявленна') 
     return
 
-def funcStr(val):
+def funcStr(val:list)->str:
+    """Встроенные функции над строкой"""
     if val[2] == "Upper":
         dicValue[val[1]] = dicValue[val[1]].upper()
         return dicValue[val[1]]
@@ -101,7 +102,8 @@ def funcStr(val):
     
     raise MyException('Не такой встроенной функции')
 
-def logOperation(val):
+def logOperation(val:list)->bool:
+    """выполнение логически операторов"""
     val[1] = getValue(val[1])
     val[2] = getValue(val[2])
     if val[0] == '==':
@@ -119,31 +121,32 @@ def logOperation(val):
     if val[0] == '||':
         return val[1] or val[2]
 
-def func_if (val):
-    g = intrep(val[1])
+def funcIF (val:list):
+    """Выполнение token IF"""
+    value = intrep(val[1])
     index=0
     for t in val[2]:
         if t[0] == 'else':
             break
         index+=1
-    if g == False and index ==0:
+    if value == False and index ==0:
         return
     temp = val[2]
-    if g and index > 0:
+    if value and index > 0:
         temp =  val[2][:index]
-    if g == False and index > 0:
+    if value == False and index > 0:
         temp =  val[2][index+1:]
     for t in temp:
             intrep(t)
-    return
 
-def func_while(val):
+def funcWhile(val:list):
+    """Выполнение token while"""
     while intrep(val[1]):
-        for t in val[2]:
-            intrep(t)
-    pass
+        for value in val[2]:
+            intrep(value)
 
-def intrep(value):
+def intrep(value:list):
+    """Интрепретатор"""
     val = value.copy()
     op = val[0]
     ##print(op)
@@ -172,7 +175,7 @@ def intrep(value):
     if op == ".":
         return func(val)
     if op == "if":
-        return func_if(val)
+        return funcIF(val)
     if op == "while":
-        return func_while(val)
+        return funcWhile(val)
     return
