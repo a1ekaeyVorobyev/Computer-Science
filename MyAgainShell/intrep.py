@@ -42,22 +42,26 @@ def  assign(val):
         dicValue[val[1]] = typeDefinitions(val[2])
     return
 
-def add(val):
+def add(val:list):
+    """Функция сложения"""
     val[1] = getValue(val[1])
     val[2] = getValue(val[2])
     return val[1]+val[2]
 
-def sub(val):
+def sub(val:list):
+    """Функция вычетания"""
     val[1] = getValue(val[1])
     val[2] = getValue(val[2])
     return val[1]-val[2]
 
-def mult(val):
+def mult(val:list):
+    """Функция умножения"""
     val[1] = getValue(val[1])
     val[2] = getValue(val[2])
     return val[1]*val[2]
 
-def div(val):
+def div(val:list):
+    """Функция деления"""
     val[1] = getValue(val[1])
     val[2] = getValue(val[2])
     return val[1]/val[2]
@@ -69,11 +73,12 @@ def printValue(val):
     print(g)
 
 def inputValue(val):
+    """Вывод значения"""
     txt = input()
     dicValue[val[1]] = txt
-    return
 
-def getValue(val):
+def getValue(val:str):
+     """Получения значения"""
     if type(val) is list:
         return intrep(val)
     elif not is_float(val) and val[0] != '"':
