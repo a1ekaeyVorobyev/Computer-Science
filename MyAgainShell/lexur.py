@@ -44,7 +44,7 @@ def formatString(txt:str) -> str:
 
     return s
 
-def  getToken(txt:str) -> list:
+def getToken(txt:str) -> list:
     """Переводим строку в token"""
     global levelToken
     token = []
@@ -143,7 +143,7 @@ def  buildTokenIF(text:str):
     token = buildToken(text[1::])
     listToken.append([text[0],token,[]])
 
-def getTokens(script:str)->list:
+def createListTokens(script:str)->list:
     """Преобразование скрипта в token"""
     global listToken
     tokens = []

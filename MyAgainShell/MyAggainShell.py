@@ -18,7 +18,7 @@ def loadFile(nameFile):
 
 def getToken()->list:
     """Преобразование скрипта в token"""
-    return lexur.getTokens(script)
+    return lexur.createListTokens(script)
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:

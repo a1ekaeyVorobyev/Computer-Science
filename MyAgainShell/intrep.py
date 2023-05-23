@@ -67,18 +67,17 @@ def div(val:list):
     return val[1]/val[2]
 
 
-def printValue(val):
+def printValue(val:list):
     """Вывод на экран"""
-    g = getValue(val[1])
-    print(g)
+    value = getValue(val[1])
+    print(value)
 
-def inputValue(val):
+def inputValue(val:list):
     """Вывод значения"""
-    txt = input()
-    dicValue[val[1]] = txt
+    dicValue[val[1]] = input()
 
 def getValue(val:str):
-     """Получения значения"""
+    """Получения значения"""
     if type(val) is list:
         return intrep(val)
     elif not is_float(val) and val[0] != '"':
@@ -88,7 +87,8 @@ def getValue(val:str):
             raise MyException('Переменная не обЪявленна')
     return typeDefinitions(val)
 
-def func(val):
+def func(val:list):
+    """определение, функции после точки"""
     if val[1] in dicValue.keys():
         return funcStr(val)
     else:
