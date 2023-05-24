@@ -169,7 +169,7 @@ def createListTokens(script:str)->list:
         listToken = []
     return tokens
 
-class TestStringMethods(unittest.TestCase):
+class TestLexur(unittest.TestCase):
     def testCreateToken(self):
         """тeсты"""
         strTest = 'g = 1+(10+34)*2'
