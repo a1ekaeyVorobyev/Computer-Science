@@ -173,12 +173,17 @@ class TestLexur(unittest.TestCase):
     def testCreateToken(self):
         """тeсты"""
         strTest = 'g = 1+(10+34)*2'
-        strRes = formatString(strTest)
+        strResult = formatString(strTest)
         strIdeal = 'g = 1 + ( 10 + 34 ) * 2'
-        self.assertEqual(strRes, strIdeal)
-        tokenRes = getToken(strRes)
+        self.assertEqual(strResult, strIdeal)
+        tokenResult = getToken(strResult)
         tokenIdeal = ['=', 'g', ['+','1',['*', ['+', '10', '34'], '2']]]
-        self.assertEqual(tokenRes, tokenIdeal)
+        self.assertEqual(tokenResult, tokenIdeal)
+    def testCreateListTokens(self):
+        strTest = 'a=2\ng = 1+(10+34)*2\na=a+g\n<<a'
+        tokensResult = createListTokens(strTest)
+        tokensIdeal = [['=', 'a', '2'], ['=', 'g', ['+','1',['*', ['+', '10', '34'], '2']]],['=', 'a', ['+', 'a', 'g']], ['<<', 'a', '']]
+        self.assertEqual(tokensResult, tokensIdeal)
 
 
 
