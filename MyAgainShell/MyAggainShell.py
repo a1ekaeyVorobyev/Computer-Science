@@ -1,11 +1,9 @@
-import tokenize, io
-import pprint
 import lexur,intrep
 import sys
 
 script = ''
-
 def runScript(tokens:list):
+
     """Запуск скрипта из файла"""
     for token in tokens:
         intrep.intrep(token)

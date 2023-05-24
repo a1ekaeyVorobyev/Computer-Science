@@ -1,3 +1,5 @@
+import unittest
+
 priority = ['&&','||','==','!=','>=','<=','>','<','*','*=','/','/=','+','+=','-','-=',"="]
 reservedWords = ['for','int','string','if','while','<<','>>',':'] 
 listWords  = priority + reservedWords+['(',')']
@@ -144,6 +146,7 @@ def  buildTokenIF(text:str):
     listToken.append([text[0],token,[]])
 
 def createListTokens(script:str)->list:
+
     """Преобразование скрипта в token"""
     global listToken
     tokens = []
@@ -165,3 +168,19 @@ def createListTokens(script:str)->list:
         tokens.append(listToken[-1])
         listToken = []
     return tokens
+
+class TestStringMethods(unittest.TestCase):
+    def testCreateToken(self):
+        """тeсты"""
+        strTest = 'g = 1+(10+34)*2'
+        strRes = formatString(strTest)
+        strIdeal = 'g = 1 + ( 10 + 34 ) * 2'
+        self.assertEqual(strRes, strIdeal)
+        tokenRes = getToken(strRes)
+        tokenIdeal = ['=', 'g', ['+','1',['*', ['+', '10', '34'], '2']]]
+        self.assertEqual(tokenRes, tokenIdeal)
+
+
+
+if __name__ == "__main__":
+    unittest.main()
