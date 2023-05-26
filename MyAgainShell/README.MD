@@ -4,6 +4,27 @@ lexer.py - Лексический нализатор кода
 intrep.py - Интрепретатор кода
 MyAggainShell - оболочка для интрепретатора
 
+
+Backus–Naur грамматика:
+<digit> ::= [0-9]
+<letter> ::= [A-Z] | [a-z]
+<symbol> ::= "|" | " " | "-" | "!" | "#" | "$" | "%" | "&" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~"
+<character> ::= <letter> | <digit> | <symbol>
+<string> ::= <character>*
+<int> ::= "0" | ("-"? [0-9] <digit>*)
+<decimal> ::= "0.0" | ("-"? [0-9] <digit>* "." [0-9] <digit>* )
+
+<oper> ::= "+" | "-" | "*" | "/"
+<logOper> ::= "<" | ">" | "==" | "!=" | "<=" | ">="
+<value> ::= <int> | <decimal> | <string>
+<staples> ::= "(" <expression> ")"
+<logStaples> ::= "(" <logExpression> ")"
+<expression> ::= <staples> | (<staples> | <value>) <oper> (<staples> | <value>)
+<logExpression> ::= <logStaples> | (<logStaples> | <value>) <logOper> (<logStaples> | <value>)
+<if> ::= "if " <logExpression> "\n" <expression> "\n" | else \n " <expression> " \n"
+<wile> ::= "while " <logExpression> " \n " <expression> " \n "
+
+
 Пример запуска:
 
 python3	MyAggainShell.py script.txt

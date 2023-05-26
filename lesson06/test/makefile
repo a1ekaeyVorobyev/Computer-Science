@@ -3,5 +3,6 @@ all:
 
 run:
 	./test
+	
 clear:
 	rm test
