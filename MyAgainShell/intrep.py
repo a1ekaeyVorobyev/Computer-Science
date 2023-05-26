@@ -3,7 +3,7 @@ class Interpretator:
 
     def is_float(self, value) -> bool:
         '''
-        являеться ли значение float
+        является ли значение float
 
         Parameters:
             val(str,int,float,bool):
@@ -20,7 +20,7 @@ class Interpretator:
 
     def is_int(self, value):
         '''
-        являеться ли значение int
+        является ли значение int
 
         Parameters:
             val(str,int,float,bool):
@@ -92,7 +92,7 @@ class Interpretator:
 
     def get_value(self, val: str):
         """
-        Получения значения из словаря
+        Получение значения из словаря
 
         Parameters:
             val(str): значение ключа
@@ -105,12 +105,12 @@ class Interpretator:
             if val in self.__dicValue.keys():
                 return self.__dicValue[val]
             else:
-                raise Exception('Переменная не объявленна')
+                raise Exception('Переменная не объявлена')
         return self.type_definitions(val)
 
     def func(self, val: list) -> None:
         """
-        определение, функции после точки
+        определение функции после точки
 
         Parameters:
             val(list):  ['.', 't', 'Upper']
@@ -119,7 +119,7 @@ class Interpretator:
         if val[1] in self.__dicValue.keys():
             return self.func_str(val)
         else:
-            raise Exception('Переменная не обЪявленна')
+            raise Exception('Переменная не обЪявлена')
         return
 
     def func_str(self, val: list) -> str:
@@ -141,10 +141,10 @@ class Interpretator:
 
     def check_variable(self, name_variable: str) -> bool:
         """
-        Проверка наличие переменной
+        Проверка наличия переменной
         
         Parameters:
-            name_variable(list): Проверяем есь ли такая переменная
+            name_variable(list): Проверяем, есть ли такая переменная
         Return:
             True/False 
     """

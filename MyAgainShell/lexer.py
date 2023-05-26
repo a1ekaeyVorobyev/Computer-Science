@@ -13,7 +13,7 @@ class LexDisassembly:
         Parameters:
             txt(str):
         Return:
-            str: Возвращает отформатированнуб строку для дальнейшего разбора
+            str: Возвращает отформатированную строку для дальнейшего разбора
     """
 
         self.__levelToken = 0
@@ -58,7 +58,7 @@ class LexDisassembly:
         Parameters:
             txt(str): Строку с кодом
         Return:
-            list,None: Возврашаем ее педствление как token
+            list,None: Возвращаем ее  как token
 
     """
         txt = self.format_string(txt)
@@ -83,12 +83,12 @@ class LexDisassembly:
         return token
 
     def build_token_rw(self, text: str) -> list:
-        """Строим token если используеться reservedWords
+        """Строим token если используется reservedWords
 
         Parameters:
             txt(str): Строку с кодом
         Return:
-            list: Возврашаем ее педствление как token
+            list: Возврашаем ее  как token
     """
         if text[0] == 'if':
             self.build_token_if(text)
@@ -109,7 +109,7 @@ class LexDisassembly:
         Parameters:
             txt(str): Строку с кодом
         Return:
-            list: Возврашаем ее педствление как token
+            list: Возврашаем ее  как token
     """
         if len(text) < 1:
             return text[0]
@@ -137,7 +137,7 @@ class LexDisassembly:
         Parameters:
             txt(str): Строку с кодом
         Return:
-            list: Возврашаем ее педствление как token
+            list: Возврашаем ее  как token
     """
         list_parenthesis = []
         index = 0
@@ -152,7 +152,7 @@ class LexDisassembly:
                 list_parenthesis.append(index)
             if "(" in t:
                 if not list_parenthesis:
-                    raise Exception('Ошибка в синтаксе ()')
+                    raise Exception('Ошибка в синтаксисе ()')
                 t1 = text[len_text - index:len_text - list_parenthesis[-1] - 1:]
                 if len(t1) > 1:
                     token = self.build_token(t1)
@@ -165,14 +165,14 @@ class LexDisassembly:
                 len_text = len(text)
             index += 1
         if list_parenthesis:
-            raise Exception('Ошибка в синтаксе ()')
+            raise Exception('Ошибка в синтаксисе ()')
         return self.build_token(text)
 
     def build_token_if(self, text: str) -> None:
         """Получение token если строка содержит if, while
 
         Parameters:
-            txt(str): Строку с кодом и добавляем в словарь
+            txt(str): Строку переводим в token и  добавляем в словарь
 
     """
         if text[-1] == ":":
@@ -186,7 +186,7 @@ class LexDisassembly:
         Parameters:
             txt(str): скрипт
         Return:
-            list: Возврашаем спимок token
+            list: Возврашаем список token
     """
         tokens = []
         for line in script.split("\n"):

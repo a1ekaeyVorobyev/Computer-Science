@@ -25,8 +25,8 @@ def get_token(script: str) -> list:
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        # print("Введите имя скрипта для обработки")
-        run_script(get_token(load_file("script.txt")))
+        print("Введите имя скрипта для обработки")
+        # run_script(get_token(load_file("script.txt")))
     else:
         for param in sys.argv[1:]:
             run_script(get_token(load_file(param)))
