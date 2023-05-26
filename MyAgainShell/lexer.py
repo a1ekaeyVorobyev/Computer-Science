@@ -7,16 +7,23 @@ class LexDisassembly:
     __levelToken = 0
 
     def format_string(self, txt: str) -> str:
-        """Форматирование строки перед обработкой"""
+        """
+        Форматирование строки перед обработкой
+
+        Parameters:
+            txt(str):
+        Return:
+            str: Возвращает отформатированнуб строку для дальнейшего разбора
+    """
 
         self.__levelToken = 0
-        
+
         cnt_pass = len(txt) - len(txt.lstrip())
         if cnt_pass % 4 != 0:
             raise Exception('Отформатируйте текст')
         self.__levelToken = cnt_pass // 4
         txt = txt.lstrip()
-        
+
         new_str = ''
         prev_char = ''
         index = 0
@@ -45,8 +52,15 @@ class LexDisassembly:
 
         return new_str
 
-    def get_token(self, txt: str) -> list:
-        """Переводим строку в token"""
+    def get_token(self, txt: str):
+        """Переводим строку в token
+
+        Parameters:
+            txt(str): Строку с кодом
+        Return:
+            list,None: Возврашаем ее педствление как token
+
+    """
         txt = self.format_string(txt)
         x = txt.split(" ")
         if x[0].startswith('else'):
@@ -69,7 +83,13 @@ class LexDisassembly:
         return token
 
     def build_token_rw(self, text: str) -> list:
-        """Строим token если используеться reservedWords"""
+        """Строим token если используеться reservedWords
+
+        Parameters:
+            txt(str): Строку с кодом
+        Return:
+            list: Возврашаем ее педствление как token
+    """
         if text[0] == 'if':
             self.build_token_if(text)
         if text[0] == 'while':
@@ -84,7 +104,13 @@ class LexDisassembly:
         return []
 
     def build_token(self, text) -> list:
-        """Строим простой token"""
+        """Строим простой token
+
+        Parameters:
+            txt(str): Строку с кодом
+        Return:
+            list: Возврашаем ее педствление как token
+    """
         if len(text) < 1:
             return text[0]
         if len(text) < 3:
@@ -106,7 +132,13 @@ class LexDisassembly:
         return []
 
     def build_token_parenthesis(self, text) -> list:
-        """Строим token если есть скобки"""
+        """Строим token если есть скобки
+
+        Parameters:
+            txt(str): Строку с кодом
+        Return:
+            list: Возврашаем ее педствление как token
+    """
         list_parenthesis = []
         index = 0
         len_text = len(text)
@@ -136,15 +168,26 @@ class LexDisassembly:
             raise Exception('Ошибка в синтаксе ()')
         return self.build_token(text)
 
-    def build_token_if(self, text: str):
-        """Получение token если строка содержит if, while"""
+    def build_token_if(self, text: str) -> None:
+        """Получение token если строка содержит if, while
+
+        Parameters:
+            txt(str): Строку с кодом и добавляем в словарь
+
+    """
         if text[-1] == ":":
             del text[-1]
         token = self.build_token(text[1::])
         self.__listToken.append([text[0], token, []])
 
     def create_list_tokens(self, script: str) -> list:
-        """Преобразование скрипта в token"""
+        """Преобразование скрипта в token
+
+        Parameters:
+            txt(str): скрипт
+        Return:
+            list: Возврашаем спимок token
+    """
         tokens = []
         for line in script.split("\n"):
             if line.strip() == '':
@@ -164,8 +207,3 @@ class LexDisassembly:
             tokens.append(self.__listToken[-1])
             self.__listToken = []
         return tokens
-
-if __name__ == '__main__':
-    lex_disassembly = LexDisassembly()
-    script = 'a=2/n  m=3'
-    lex_disassembly.format_string(script)
