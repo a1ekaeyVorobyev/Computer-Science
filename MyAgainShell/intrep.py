@@ -1,186 +1,271 @@
-dicValue = {}
+class Interpretator:
+    __dicValue = {}
 
-def is_float(value):
-  if value is None:
-      return False
-  try:
-      float(value)
-      return True
-  except:
-      return False
+    def is_float(self, value) -> bool:
+        '''
+        являеться ли значение float
 
-def is_int(value):
-    if type(value) is int:
-        return True
-    if type(value) is str:
+        Parameters:
+            val(str,int,float,bool):
+        Return:
+            True/False:
+    '''
         if value is None:
             return False
-        if value.isdigit():
+        try:
+            float(value)
             return True
-        else:
+        except:
             return False
-    return False
 
-def typeDefinitions(val):
-    if val == None:
+    def is_int(self, value):
+        '''
+        являеться ли значение int
+
+        Parameters:
+            val(str,int,float,bool):
+        Return:
+            True/False:
+    '''
+        if type(value) is int:
+            return True
+        if type(value) is str:
+            return value.isdigit()
+        return False
+
+    def type_definitions(self, val):
+        '''
+        преобразует в возможный тип
+
+        Parameters:
+            val(str,int,float,bool):
+        Return:
+            str,int,float,bool:
+    '''
+        if val == None:
+            return val
+        if type(val) is bool:
+            return val
+        if self.is_int(val):
+            return int(val)
+        if self.is_float(val):
+            return float(val)
+        if val[0] == '"':
+            return val[1:-1:]
         return val
-    if type(val) is bool:
-        return val
-    if is_int(val):
-        return int(val)
-    if is_float(val):
-        return float(val)
-    if val[0] == '"':
-        return val[1:-1:]
-    return val
 
-def  assign(val):
-    if type(val[2]) is list:
-        g = intrep(val[2])
-        dicValue[val[1]] = typeDefinitions(g)
-    else:
-        dicValue[val[1]] = typeDefinitions(val[2])
-    return
+    def assign(self, val) -> None:
+        '''
+    Добавляем переменную в словарь.
+        Parameters:
+            val(list):
 
-def add(val:list):
-    """Функция сложения"""
-    val[1] = getValue(val[1])
-    val[2] = getValue(val[2])
-    return val[1]+val[2]
-
-def sub(val:list):
-    """Функция вычетания"""
-    val[1] = getValue(val[1])
-    val[2] = getValue(val[2])
-    return val[1]-val[2]
-
-def mult(val:list):
-    """Функция умножения"""
-    val[1] = getValue(val[1])
-    val[2] = getValue(val[2])
-    return val[1]*val[2]
-
-def div(val:list):
-    """Функция деления"""
-    val[1] = getValue(val[1])
-    val[2] = getValue(val[2])
-    return val[1]/val[2]
-
-
-def printValue(val:list):
-    """Вывод на экран"""
-    value = getValue(val[1])
-    print(value)
-
-def inputValue(val:list):
-    """Вывод значения"""
-    dicValue[val[1]] = input()
-
-def getValue(val:str):
-    """Получения значения"""
-    if type(val) is list:
-        return intrep(val)
-    elif not is_float(val) and val[0] != '"':
-        if val in dicValue.keys():
-            return dicValue[val]
+    for example ['=','a','2']
+    A variable '2' is placed in the dictionary '__dicValue' by the key 'a'
+    '''
+        if type(val[2]) is list:
+            self.__dicValue[val[1]] = self.type_definitions(self.intrep(val[2]))
         else:
-            raise MyException('Переменная не обЪявленна')
-    return typeDefinitions(val)
-
-def func(val:list):
-    """определение, функции после точки"""
-    if val[1] in dicValue.keys():
-        return funcStr(val)
-    else:
-        raise MyException('Переменная не обЪявленна') 
-    return
-
-def funcStr(val:list)->str:
-    """Встроенные функции над строкой"""
-    if val[2] == "Upper":
-        dicValue[val[1]] = dicValue[val[1]].upper()
-        return dicValue[val[1]]
-    
-    if val[2] == "Lower":
-        dicValue[val[1]] = dicValue[val[1]].lower()
-        return dicValue[val[1]]
-    
-    raise MyException('Не такой встроенной функции')
-
-def logOperation(val:list)->bool:
-    """выполнение логически операторов"""
-    val[1] = getValue(val[1])
-    val[2] = getValue(val[2])
-    if val[0] == '==':
-        return val[1]==val[2]
-    if val[0] == '>=':
-        return val[1]>=val[2]
-    if val[0] == '<=':
-        return val[1]<=val[2]
-    if val[0] == '>':
-        return val[1]>val[2]
-    if val[0] == '<':
-        return val[1]<val[2]
-    if val[0] == '&&':
-        return val[1] and val[2]
-    if val[0] == '||':
-        return val[1] or val[2]
-
-def funcIF (val:list):
-    """Выполнение token IF"""
-    value = intrep(val[1])
-    index=0
-    for t in val[2]:
-        if t[0] == 'else':
-            break
-        index+=1
-    if value == False and index ==0:
+            self.__dicValue[val[1]] = self.type_definitions(val[2])
         return
-    temp = val[2]
-    if value and index > 0:
-        temp =  val[2][:index]
-    if value == False and index > 0:
-        temp =  val[2][index+1:]
-    for t in temp:
-            intrep(t)
 
-def funcWhile(val:list):
-    """Выполнение token while"""
-    while intrep(val[1]):
-        for value in val[2]:
-            intrep(value)
+    def print_value(self, val: list):
+        '''
+    print variable.
+        Parameters:
+            val(list):
 
-def intrep(value:list):
-    """Интрепретатор"""
-    val = value.copy()
-    op = val[0]
-    ##print(op)
-    if op == '=':
-        return assign(val)
-    if op == '+':
-        return add(val)
-    if op == '<<':
-        return printValue(val)
-    if op == '>>':
-        return inputValue(val)
-    if op == '-':
-        return sub(val)
-    if op == '*':
-        return mult(val)
-    if op == '/':
-        return div(val)
-    if op == '+=' or op == '-=' or op == '*=' or op == '/=':
-        t = val.copy()
-        t[2] = val
-        t[2][0] = t[0][0]
-        t[0] = '='
-        return assign(t)
-    if op == '==' or op =='!=' or op =='>=' or op =='<=' or op =='>' or op =='<' or op =='&&' or op =='||' :
-        return logOperation(val)
-    if op == ".":
-        return func(val)
-    if op == "if":
-        return funcIF(val)
-    if op == "while":
-        return funcWhile(val)
-    return
+    for example ['<<','2',''] displaying the value 2
+    '''
+        value = self.get_value(val[1])
+        print(value)
+
+    def input_value(self, val: list):
+        '''
+    input variable.
+        Parameters:
+            val(list):
+
+    for example ['<<','a',''] move the value entered into the dictionary '__dicValue' by the key 'a'
+    '''
+        self.__dicValue[val[1]] = input()
+
+    def get_value(self, val: str):
+        """
+        Получения значения из словаря
+
+        Parameters:
+            val(str): значение ключа
+        Result:
+            int,float,str,bool
+    """
+        if type(val) is list:
+            return self.intrep(val)
+        elif not self.is_float(val) and val[0] != '"':
+            if val in self.__dicValue.keys():
+                return self.__dicValue[val]
+            else:
+                raise Exception('Переменная не объявленна')
+        return self.type_definitions(val)
+
+    def func(self, val: list) -> None:
+        """
+        определение, функции после точки
+
+        Parameters:
+            val(list):  ['.', 't', 'Upper']
+
+    """
+        if val[1] in self.__dicValue.keys():
+            return self.func_str(val)
+        else:
+            raise Exception('Переменная не обЪявленна')
+        return
+
+    def func_str(self, val: list) -> str:
+        """
+        Встроенные функции над строкой
+
+        Parameters:
+            val(list): Для примера ['.', 't', 'Upper']
+        Return:
+            str    
+    """
+
+        dic_func_str = {'Upper': lambda x: x.upper(), 'Lower': lambda x: x.lower()}
+
+        if val[2] in dic_func_str:
+            self.__dicValue[val[1]] = dic_func_str[val[2]](self.__dicValue[val[1]])
+            return self.__dicValue[val[1]]
+        raise Exception('Нет такой встроенной функции')
+
+    def check_variable(self, name_variable: str) -> bool:
+        """
+        Проверка наличие переменной
+        
+        Parameters:
+            name_variable(list): Проверяем есь ли такая переменная
+        Return:
+            True/False 
+    """
+        return name_variable in self.__dicValue
+
+    def operation_simple(self, val: list):
+        """
+        Выполнение логических операторов
+        
+        Parameters:
+            val(list): Для примера ['+', '1', '2'] или ['>', '1', '2']
+        Return:
+            str,int,flat,bool   
+        
+    """
+        dic_operation = {'==': lambda x, y: x == y, '!=': lambda x, y: x != y, '>=': lambda x, y: x >= y,
+                         '<=': lambda x, y: x <= y,
+                         '>': lambda x, y: x > y, '<': lambda x, y: x < y, '&&': lambda x, y: x and y,
+                         '||': lambda x, y: x or y,
+                         '+': lambda x, y: x + y, '-': lambda x, y: x - y, '*': lambda x, y: x * y,
+                         '/': lambda x, y: x / y}
+
+        val[1] = self.get_value(val[1])
+        val[2] = self.get_value(val[2])
+
+        if val[0] in dic_operation:
+            return dic_operation[val[0]](val[1], val[2])
+        raise Exception('Нет такой логической функции')
+
+    def operation(self, val: list):
+        """
+        Выполнение операторов
+
+        Parameters:
+            val(list): Для примера ['if', ['>','a','10'], ['+=','b','2']] 
+        Return:
+            str,int,flat,bool   
+    
+    """
+        dic_operation = {'if': lambda x: self.func_if(x), 'while': lambda x: self.func_while(x)}
+
+        if val[0] in dic_operation:
+            return dic_operation[val[0]](val)
+        raise Exception('Нет такой функции')
+
+    def func_if(self, val: list):
+        """
+        Выполнение оператора if
+
+        Parameters:
+            val(list): Для примера ['if', ['>','a','10'], ['+=','b','2']] 
+        Return:
+            str,int,flat,bool   
+    """
+
+        value = self.intrep(val[1])
+        index = 0
+        for token in val[2]:
+            if token[0] == 'else':
+                break
+            index += 1
+        if not value and index == 0:
+            return
+        tokens = val[2]
+        if value and index > 0:
+            tokens = val[2][:index]
+        if not value and index > 0:
+            tokens = val[2][index + 1:]
+        for token in tokens:
+            self.intrep(token)
+
+    def func_while(self, val: list):
+        """
+        Выполнение оператора while
+
+        Parameters:
+            val(list): Для примера ['while', ['>','a','100'], ['+=','a','2']] 
+        Return:
+            str,int,flat,bool   
+    """
+        while self.intrep(val[1]):
+            for value in val[2]:
+                self.intrep(value)
+
+    def intrep(self, value: list):
+        """
+        Интрепретатор
+
+        Parameters:
+            val(list): Для примера [['=','a','1'],['while', ['>','a','100'], ['+=','a','2']]] 
+        Return:
+            str,int,flat,bool   
+   
+    """
+        list_operation_simple = ['==', '!=', '>=', '<=', '>', '<', '&&',
+                                 '||', '+', '-', '*', '/']
+        list_operation = ['if', 'while']
+        val = value.copy()
+        op = val[0]
+
+        if op == '=':
+            return self.assign(val)
+        if op == '<<':
+            return self.print_value(val)
+        if op == '>>':
+            return self.input_value(val)
+
+        if op == '+=' or op == '-=' or op == '*=' or op == '/=':
+            token = val.copy()
+            token[2] = val
+            token[2][0] = token[0][0]
+            token[0] = '='
+            return self.assign(token)
+        if op in list_operation_simple:
+            return self.operation_simple(val)
+
+        if op == ".":
+            return self.func(val)
+
+        if op in list_operation:
+            return self.operation(val)
+
+        raise Exception('Не найдена операция')
+        return

@@ -20,6 +20,6 @@ t = (a>b) || (b<3)
 <<t
 g += 1
 <<g
->>g
-g = g.Upper()+"ssf"
-<<g
+>>t
+t = t.Upper()+"ssf"
+<<t

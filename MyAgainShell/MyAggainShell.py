@@ -1,29 +1,32 @@
-import lexur,intrep
+import lexer
+import intrep
 import sys
 
-script = ''
-def runScript(tokens:list):
 
+def run_script(tokens: list):
     """Запуск скрипта из файла"""
+    interpretator = intrep.Interpretator()
     for token in tokens:
-        intrep.intrep(token)
+        interpretator.intrep(token)
 
-def loadFile(nameFile):
+
+def load_file(name_file) -> str:
     """Загрузка скрипта из файла"""
-    global script
-    with open(nameFile) as file:
+    with open(name_file) as file:
         script = file.read()
+    return script
 
-def getToken()->list:
+
+def get_token(script: str) -> list:
     """Преобразование скрипта в token"""
-    return lexur.createListTokens(script)
+    lex_disassembly = lexer.LexDisassembly()
+    return lex_disassembly.create_list_tokens(script)
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
-        #print("Введите имя скрипта для обработки")
-        loadFile("script.txt")
-        runScript(getToken())
+        # print("Введите имя скрипта для обработки")
+        run_script(get_token(load_file("script.txt")))
     else:
         for param in sys.argv[1:]:
-            loadFile(param)
-            runScript(getToken())
+            run_script(get_token(load_file(param)))
