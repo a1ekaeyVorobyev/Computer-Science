@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<head>
+
+    <title>{{title}}</title>
+
+</head>
+
+<link rel=stylesheet type=text/css href="/static/css/style.css" />
+<script src="/static/script/script.js"></script>
+
+<body
+
+  <fieldset>
+  <legend>Выполнить скрипт. Ввежит и нажмите Enter.</legend>
+  <form action="{{ url_for("index")}}" method="post">
+    <p>
+    <label >Введенный скрипт:</label><br> 
+    <textarea name="script" id = "scrip">{{script}}</textarea>
+    <label >Полученный токен:</label><br> 
+    <textarea name="token" id = "token">{{token}}</textarea>
+    <label >Полученный результат:</label><br> 
+    <textarea name="result" id = "result">{{result}}</textarea>
+    </p>
+    </fieldset>
+   
+</body>
+
+
+</html>

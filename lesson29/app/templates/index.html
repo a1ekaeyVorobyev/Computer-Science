@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<head>
+
+    <title>{{title}}</title>
+
+</head>
+
+<link rel=stylesheet type=text/css href="/static/css/style.css" />
+<script src="/static/script/script.js"></script>
+
+<body
+
+  <fieldset>
+  <legend>Выполнить скрипт. Ввежит и нажмите Enter.</legend>
+  <form action="{{ url_for("index")}}" method="post">
+    <p>
+    <label for="firstname">Введите текст:</label><br> 
+    <textarea name="script" id = "scrip">{{script}}</textarea>
+    <button type="submit">Выполнить.</button>
+    </p>
+    </fieldset>
+   
+</body>
+
+
+</html>
