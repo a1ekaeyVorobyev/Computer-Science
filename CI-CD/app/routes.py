@@ -26,7 +26,6 @@ def index():
     #revText = pythonText[::-1], 
     )
 
-
 @app.route('/test', methods=['GET'])
 def hello():
     return 'Hello World!'
