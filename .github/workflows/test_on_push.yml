@@ -24,6 +24,7 @@ jobs:
       - name: Install requirements
         # Устанавливаем зависимости
         run: pip install -r requirements.txt
+        working-directory: ${{env.working-directory}}
       - name: Run tests
         run: coverage run src/CI-CD/testAPI.py
       - name: Tests report
