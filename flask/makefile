@@ -8,3 +8,5 @@ compose:
 	docker compose up -d
 dockerstop:
 	docker ps -q --filter ancestor=flask_docker | xargs docker stop
+test:
+	python3 -m unittest discover -v tests
