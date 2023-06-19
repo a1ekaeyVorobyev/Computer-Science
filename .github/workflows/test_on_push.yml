@@ -10,6 +10,9 @@ on:
 jobs:
   run_tests:
     runs-on: [ubuntu-latest]
+    env:
+      working-directory: ./CI-CD
+      
     steps:
       # Чекаутим код
       - uses: actions/checkout@master
