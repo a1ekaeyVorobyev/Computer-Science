@@ -1,0 +1,25 @@
+a = 2
+while a<100:
+    a+=1
+    if a<80:
+        <<a
+    else:
+        <<("abc"+"df")
+        <<a
+        b = 0
+        while b<3
+            <<b
+            b+=1
+    a+=10
+a = 2
+b = 1
+g = 1+(10+34)*2
+t = (a>b) && (b>(a+b))
+<<t
+t = (a>b) || (b<3)
+<<t
+g += 1
+<<g
+>>t
+t = t.Upper()+"ssf"
+<<t

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+
+    <title>{{title}}</title>
+
+</head>
+
+<link rel=stylesheet type=text/css href="/static/css/style.css" />
+<script src="/static/script/script.js"></script>
+
+<body
+
+  <fieldset>
+    <legend>Перевернуть с помошью js. Ввежит и нажмите Enter.</legend>
+      <p>
+          <label for="name">Введите текст и нажмите Enter:<br> 
+          <input id="input" type="text">
+    </p>
+    <p>
+        <label for="name">перевернутый текст:<br> 
+        <input id="output" type="text">
+	</p>
+  </fieldset>
+
+  <fieldset>
+  <legend>Перевернуть с помошью flask. Ввежит и нажмите Enter.</legend>
+  <form action="{{ url_for("index")}}" method="post">
+    <p>
+    <label for="firstname">Введите текст:</label><br> 
+    <input type="text" id="pythonText" name="pythonText"><br>
+    <button type="submit">Выполнить.</button>
+    </p>
+    </fieldset>
+   
+</body>
+
+<script>
+    (function() {
+        document.querySelector('input').addEventListener('keydown', function(e) {
+        if (e.keyCode === 13) {
+          // можете делать все что угодно со значением текстового поля
+          console.log(this.value);
+          document.getElementById('output').value = reverseString(this.value);
+        }
+      });
+    })();
+    
+</script>
+
+
+</html>

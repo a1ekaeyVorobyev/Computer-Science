@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>Default Title</title>
+    {% endif %}
+    <script>
+        alert('Hello on the second page!')
+    </script>
+    <style>
+        body {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    This is a {{page}} page!
+    <a href="/page3">Next!</a>
+</body>
+
+</html>
