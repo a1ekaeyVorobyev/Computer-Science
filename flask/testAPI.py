@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append('..')
 import app as tested_app
 import json
 
