@@ -26,6 +26,8 @@ jobs:
         run: pip install -r requirements.txt
         working-directory: ${{env.working-directory}}
       - name: Run tests
-        run: coverage run src/CI-CD/testAPI.py
+        run: coverage run testAPI.py
+        working-directory: ${{env.working-directory}}
       - name: Tests report
         run: coverage report
+        working-directory: ${{env.working-directory}}
