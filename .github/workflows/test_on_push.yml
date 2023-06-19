@@ -44,7 +44,7 @@ jobs:
         run: echo ${{ vars.DOCKER_LOGIN }}
       - name: Login to docker.io
         # Сначала мы логинимся в docker.io
-        run:  echo ${{ vars.DOCKER_PWD }} | docker login -u ${{ vars.DOCKER_LOGIN }} --password-stdin
+        run:  docker login -u ${{ vars.DOCKER_LOGIN }} -p ${{ vars.DOCKER_PWD }}
         # Чекаутим код
       - uses: actions/checkout@master
       - name: Build image
