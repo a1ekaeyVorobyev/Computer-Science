@@ -40,6 +40,8 @@ jobs:
       LOGIN: ${{ secrets.DOCKER_LOGIN }}
       NAME: ${{ secrets.DOCKER_NAME }}
     steps:
+      - name: Print Login
+        run: echo LOGIN
       - name: Login to docker.io
         # Сначала мы логинимся в docker.io
         run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
