@@ -13,8 +13,6 @@ jobs:
     env:
       working-directory : ./CI-CD
     steps:
-      # Чекаутим код
-      - uses: actions/checkout@master
       # Устанавливаем python нужной версии
       - uses: actions/setup-python@v1
         with:
