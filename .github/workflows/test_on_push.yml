@@ -39,6 +39,7 @@ jobs:
     env:
       LOGIN: ${{ vars.DOCKER_LOGIN }}
       NAME: ${{ vars.DOCKER_NAME }}
+      working-directory: ./CI-CD
     steps:
       - name: Print Login
         run: echo ${{ vars.DOCKER_LOGIN }}
@@ -50,6 +51,7 @@ jobs:
       - name: Build image
         # Собираем image и называем его так как указано в hub.docker т.е. login/repository:version
         run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
+        working-directory: ${{env.working-directory}}
       - name: Push image to docker.io
         # Пушим образ в registry
         run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
